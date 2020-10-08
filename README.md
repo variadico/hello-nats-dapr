@@ -24,6 +24,7 @@ Forwarding from [::1]:4222 -> 4222
 In another terminal, print the messages.
 
 ```
+$ GO111MODULE=off go get github.com/nats-io/stan.go/examples/stan-sub
 $ stan-sub -c stan foo
 Connected to nats://127.0.0.1:4222 clusterID: [stan] clientID: [stan-sub]
 Listening on [foo], clientID=[stan-sub], qgroup=[] durable=[]
