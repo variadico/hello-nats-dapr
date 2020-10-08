@@ -1,0 +1,47 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello-nats-dapr-sub
+  labels:
+    app: hello-nats-dapr-sub
+spec:
+  selector:
+    app: hello-nats-dapr-sub
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nats-dapr-sub
+  labels:
+    app: hello-nats-dapr-sub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-nats-dapr-sub
+  template:
+    metadata:
+      labels:
+        app: hello-nats-dapr-sub
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: hello-nats-dapr-sub
+    spec:
+      containers:
+      - name: hello-nats-dapr-sub
+        image: variadico/hello-nats-dapr:1
+        imagePullPolicy: Always
+        env:
+        - name: DAPR_PUBSUB_NAME
+          value: messagebus
+        command:
+        - /hello-nats-dapr
+        - -sub
+        ports:
+        - containerPort: 3000
