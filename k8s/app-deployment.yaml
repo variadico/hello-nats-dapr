@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nats-dapr
+  labels:
+    app: hello-nats-dapr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-nats-dapr
+  template:
+    metadata:
+      labels:
+        app: hello-nats-dapr
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: hello-nats-dapr
+    spec:
+      containers:
+      - name: hello-nats-dapr
+        image: variadico/hello-nats-dapr:1
+        env:
+        - name: DAPR_PUBSUB_NAME
+          value: messagebus

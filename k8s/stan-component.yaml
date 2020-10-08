@@ -1,0 +1,13 @@
+apiVersion: dapr.io/v0alpha1
+kind: Component
+metadata:
+  name: messagebus
+spec:
+  type: pubsub.natsstreaming
+  metadata:
+  - name: natsURL
+    value: nats://nats:4222
+  - name: natsStreamingClusterID
+    value: stan
+  - name: subscriptionType
+    value: topic
